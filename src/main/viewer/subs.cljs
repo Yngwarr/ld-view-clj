@@ -1,5 +1,7 @@
 (ns viewer.subs
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub subscribe]]))
+
+; -------- ATOMIC --------
 
 (reg-sub
   :user
@@ -12,3 +14,10 @@
 (reg-sub
   :lists
   (fn [db _] (:lists db)))
+
+; -------- COMPOSITE --------
+
+(reg-sub
+ :current-list
+ (fn [] [(subscribe [:selected-list]) (subscribe [:lists])])
+ (fn [[selected lists]] (get lists selected)))

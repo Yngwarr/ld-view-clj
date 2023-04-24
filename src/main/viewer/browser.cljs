@@ -1,11 +1,27 @@
 (ns viewer.browser
-  (:require [reagent.dom]
+  (:require-macros [secretary.core :refer [defroute]])
+  (:require [goog.events :as events]
+            [reagent.dom]
             [re-frame.core :as rf]
+            [secretary.core :as secretary]
             [viewer.views]
             [viewer.subs]
-            [viewer.events]))
+            [viewer.events])
+  (:import [goog History]
+           [goog.history EventType]))
 
 (rf/dispatch-sync [:init-db])
+
+(defroute "/" [] (rf/dispatch [:clear-list]))
+
+(defroute "/:list-name" [list-name]
+  (rf/dispatch [:show-list (keyword list-name)]))
+
+(defonce history
+  (doto (History.)
+    (events/listen EventType.NAVIGATE
+                   (fn [^js/goog.History.Event event] (secretary/dispatch! (.-token event))))
+    (.setEnabled true)))
 
 (defn render []
   (reagent.dom/render
