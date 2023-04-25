@@ -12,7 +12,6 @@
 (reg-event-fx
  :get-ids
  (fn [{:keys [db]} [_ name-string]]
-   (prn "get-ids")
    {:db (assoc db :loading? true)
     :fx [[:http-xhrio
           {:method :get
