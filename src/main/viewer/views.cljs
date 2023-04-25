@@ -3,15 +3,15 @@
             [viewer.link :as link]))
 
 ;; TODO add a link to the game
-(defn entry [author game]
+(defn entry [author]
   [:li {:key author}
-   (str (name author) " made ") [:a {:href (link/backlog)} game]])
+   (str (name author) " made ") [:a {:href (link/backlog)} "The placeholder game"]])
 
 (defn entry-list []
   (let [entries @(subscribe [:current-list])]
     (if (nil? entries)
       [:p "Invalid list name, try again."]
-      [:ul (map (fn [[author game]] (entry author game)) entries)])))
+      [:ul (map (fn [author] (entry author)) entries)])))
 
 (defn list-link [list-id]
   (let [list-name (name list-id)]
@@ -23,4 +23,4 @@
 (defn backlog []
   (if @(subscribe [:selected-list])
     (entry-list)
-    (list-selection (keys @(subscribe [:lists])))))
+    (list-selection (keys @(subscribe [:author-lists])))))

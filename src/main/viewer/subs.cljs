@@ -4,20 +4,21 @@
 ; -------- ATOMIC --------
 
 (reg-sub
-  :user
-  (fn [db _] (:user db)))
+ :user
+ (fn [db _] (:user db)))
 
 (reg-sub
-  :selected-list
-  (fn [db _] (:selected-list db)))
+ :selected-list
+ (fn [db _] (:selected-list db)))
 
 (reg-sub
-  :lists
-  (fn [db _] (:lists db)))
+ :author-lists
+ (fn [db _] (:author-lists db)))
 
 ; -------- COMPOSITE --------
 
 (reg-sub
  :current-list
- (fn [] [(subscribe [:selected-list]) (subscribe [:lists])])
- (fn [[selected lists]] (get lists selected)))
+ (fn [] [(subscribe [:selected-list]) (subscribe [:author-lists])])
+ (fn [[selected lists]]
+   (get lists selected)))

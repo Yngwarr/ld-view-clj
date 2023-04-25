@@ -1,6 +1,5 @@
 # TODO
 
-* slurping backlog lists from files
 * getting games info from ldjam.com
 * handling different jams
 * saving user info in localStorage

@@ -19,8 +19,10 @@
 
 (defonce history
   (doto (History.)
-    (events/listen EventType.NAVIGATE
-                   (fn [^js/goog.History.Event event] (secretary/dispatch! (.-token event))))
+    (events/listen
+     EventType.NAVIGATE
+     (fn [^js/goog.History.Event event]
+       (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
 (defn render []

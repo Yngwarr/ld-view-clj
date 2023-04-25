@@ -1,4 +1,6 @@
-(ns viewer.db)
+(ns viewer.db
+  (:require
+   [viewer.data :refer [backlog-lists]]))
 
 (def default-db
   {;; if user is set, checkmark the games they commented on
@@ -7,8 +9,5 @@
    ;; if nil, allow user to choose the list
    :selected-list nil
 
-   ;; the lists are populated from hard drive (maybe, from localStorage too)
-   :lists {:pixel-prophecy
-           {:yngvarr "The day"
-            :fgeva "The night"
-            :commanderstitch "The chaos"}}})
+   ;; author lists are populated by me and, maybe, by user
+   :author-lists backlog-lists})
