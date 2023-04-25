@@ -1,38 +1,38 @@
-(ns viewer.browser
+(ns viewer.backlog.core
   (:require-macros [secretary.core :refer [defroute]])
-  (:require [goog.events :as events]
+  (:require [viewer.browser.core]
+            [goog.events :as events]
             [reagent.dom]
             [re-frame.core :as rf]
             [secretary.core :as secretary]
-            [viewer.views]
-            [viewer.subs]
-            [viewer.events])
+            [viewer.backlog.db]
+            [viewer.backlog.views]
+            [viewer.backlog.subs]
+            [viewer.backlog.events])
   (:import [goog History]
            [goog.history EventType]))
 
 (rf/dispatch-sync [:init-db])
 
-;; backlog endpoints
-(defroute "/backlog" [] (rf/dispatch [:clear-list]))
-(defroute "/backlog/:list-name" [list-name]
+(defroute "/" [] (rf/dispatch [:clear-list]))
+(defroute "/:list-name" [list-name]
   (rf/dispatch [:show-list (keyword list-name)]))
 
-;; utils
-(defroute "/get-ids/:names" [names]
-  (rf/dispatch [:get-ids names]))
+(defn render []
+  (reagent.dom/render
+    [viewer.backlog.views/app]
+    (.getElementById js/document "app")))
 
-(defonce history
+;; -------- COMMON --------
+
+(defonce ^:export history
   (doto (History.)
     (events/listen
      EventType.NAVIGATE
      (fn [^js/goog.History.Event event]
+       (println "navigated")
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
-
-(defn render []
-  (reagent.dom/render
-    [viewer.views/backlog]
-    (.getElementById js/document "app")))
 
 ;; start is called by init and after code reloading finishes
 (defn ^:dev/after-load start! []

@@ -1,12 +1,10 @@
-(ns viewer.db
+(ns viewer.backlog.db
   (:require
-   [viewer.data :refer [backlog-lists]]))
+    [viewer.backlog.data :refer [backlog-lists]]))
 
 (def default-db
   {;; set true when the data is loading
    :loading? false
-
-   :shown-ids nil
 
    ;; if user is set, checkmark the games they commented on
    :user nil

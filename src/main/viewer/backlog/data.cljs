@@ -1,4 +1,4 @@
-(ns viewer.data)
+(ns viewer.backlog.data)
 
 (def backlog-lists
   {:pixel-prophecy ["commanderstitch"
