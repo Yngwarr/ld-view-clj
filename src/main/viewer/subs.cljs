@@ -4,6 +4,10 @@
 ; -------- ATOMIC --------
 
 (reg-sub
+ :loading?
+ (fn [db _] (:loading? db)))
+
+(reg-sub
  :user
  (fn [db _] (:user db)))
 
@@ -14,6 +18,10 @@
 (reg-sub
  :author-lists
  (fn [db _] (:author-lists db)))
+
+(reg-sub
+ :shown-ids
+ (fn [db _] (:shown-ids db)))
 
 ; -------- COMPOSITE --------
 

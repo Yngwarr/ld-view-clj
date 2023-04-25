@@ -1,19 +1,46 @@
 (ns viewer.events
-  (:require [viewer.db :refer [default-db]]
-            [re-frame.core :refer [reg-event-fx reg-event-db]]))
+  (:require
+   [viewer.db :refer [default-db]]
+   [ajax.core :as ajax]
+   [day8.re-frame.http-fx]
+   [re-frame.core :refer [reg-event-db reg-event-fx]]))
 
 ;; TODO load username from localStorage
 ;; TODO load selected list from url params
 (reg-event-fx
-  :init-db
-  (fn [_ _] {:db default-db}))
+ :init-db
+ (fn [_ _] {:db default-db}))
 
 (reg-event-db
  :clear-list
  (fn [db]
    (assoc db :selected-list nil)))
 
+;; TODO send the request
+;(reg-event-fx
+ ;:show-list
+ ;(fn [{:keys [db]}]
+   ;{:db (assoc db :loading? true)
+    ;:fx [[:http-xhrio {:method :get}]]}))
+
 (reg-event-db
  :show-list
  (fn [db [_ list-name]]
    (assoc db :selected-list list-name)))
+
+(reg-event-fx
+ :get-ids
+ (fn [{:keys [db]} [_ name-string]]
+   {:db (assoc db :loading? true)
+    :fx [[:http-xhrio
+          {:method :get
+           :uri (str "https://api.ldjam.com/vx/node2/walk/1/users/" name-string)
+           :response-format (ajax/json-response-format {:keywords? true})
+           :on-success [:show-ids]
+           :on-failure [:show-error]
+           }]]}))
+
+(reg-event-db
+ :show-ids
+ (fn [db [_ ids]]
+   (assoc db :loading? false :shown-ids (:node_id ids))))

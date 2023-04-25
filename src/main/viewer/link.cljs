@@ -1,5 +1,5 @@
 (ns viewer.link)
 
 (defn backlog
-  ([] "#")
-  ([list-name] (str "#/" list-name)))
+  ([] "#/backlog")
+  ([list-name] (str "#/backlog/" list-name)))

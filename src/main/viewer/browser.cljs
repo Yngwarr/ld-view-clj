@@ -12,10 +12,14 @@
 
 (rf/dispatch-sync [:init-db])
 
-(defroute "/" [] (rf/dispatch [:clear-list]))
-
-(defroute "/:list-name" [list-name]
+;; backlog endpoints
+(defroute "/backlog" [] (rf/dispatch [:clear-list]))
+(defroute "/backlog/:list-name" [list-name]
   (rf/dispatch [:show-list (keyword list-name)]))
+
+;; utils
+(defroute "/get-ids/:names" [names]
+  (rf/dispatch [:get-ids names]))
 
 (defonce history
   (doto (History.)

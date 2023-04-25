@@ -21,6 +21,12 @@
   [:ul (map list-link list-names)])
 
 (defn backlog []
-  (if @(subscribe [:selected-list])
-    (entry-list)
-    (list-selection (keys @(subscribe [:author-lists])))))
+  [:<>
+   (if @(subscribe [:selected-list])
+     (entry-list)
+     (list-selection (keys @(subscribe [:author-lists]))))
+   (let [ids @(subscribe [:shown-ids])]
+     (when ids
+       [:p (str "Ids: " ids)]))
+   (when @(subscribe [:loading?])
+     [:p "Now loading..."])])

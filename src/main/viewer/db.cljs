@@ -3,7 +3,12 @@
    [viewer.data :refer [backlog-lists]]))
 
 (def default-db
-  {;; if user is set, checkmark the games they commented on
+  {;; set true when the data is loading
+   :loading? false
+
+   :shown-ids nil
+
+   ;; if user is set, checkmark the games they commented on
    :user nil
 
    ;; if nil, allow user to choose the list
