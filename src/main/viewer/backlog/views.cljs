@@ -8,7 +8,7 @@
 ;; TODO add a link to the game
 (defn entry [author]
   [:li {:key author}
-   (str (name author) " made ") [:a {:href (link)} "The placeholder game"]])
+   (str author " made ") [:a {:href (link)} "The placeholder game"]])
 
 (defn entry-list []
   (let [entries @(subscribe [:current-list])]

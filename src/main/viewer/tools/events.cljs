@@ -24,3 +24,5 @@
  :show-ids
  (fn [db [_ ids]]
    (assoc db :loading? false :shown-ids (:node_id ids))))
+
+;; TODO :show-error
