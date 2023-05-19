@@ -9,8 +9,14 @@
    (:loading? db)))
 
 (reg-sub
- :user-slug
+ :user-map
  (fn [db _query]
-   (:user-slug db)))
+   (:user db)))
 
 ; -------- COMPOSITE --------
+
+(reg-sub
+ :user
+ (fn [] (subscribe [:user-map]))
+ (fn [user [_ prop]]
+   (prop user)))
