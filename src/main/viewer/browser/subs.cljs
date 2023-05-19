@@ -1,14 +1,16 @@
-(ns viewer.tools.subs
+(ns viewer.browser.subs
   (:require [re-frame.core :refer [reg-sub subscribe]]))
 
 ; -------- ATOMIC --------
 
 (reg-sub
-  :loading?
-  (fn [db _] (:loading? db)))
+ :loading?
+ (fn [db _query]
+   (:loading? db)))
 
 (reg-sub
-  :shown-ids
-  (fn [db _] (:shown-ids db)))
+ :user-slug
+ (fn [db _query]
+   (:user-slug db)))
 
 ; -------- COMPOSITE --------

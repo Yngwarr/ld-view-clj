@@ -16,16 +16,5 @@
   {:target :browser
    :output-dir "public/js"
    :asset-path "/js"
-
-   :modules
-   {:main {}
-
-    :backlog
-    {:entries [viewer.backlog.core]
-     :depends-on #{:main}
-     :init-fn viewer.backlog.core/init}
-
-    :tools
-    {:entries [viewer.tools.core]
-     :depends-on #{:main}
-     :init-fn viewer.tools.core/init}}}}}
+   :modules {:main {:entries [viewer.browser.core]
+                    :init-fn viewer.browser.core/init}}}}}
