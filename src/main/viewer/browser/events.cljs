@@ -99,8 +99,9 @@
                        (merge
                         (assoc % :ratings (apply-to-keys (:grade %) parse-category))
                         (parse-magic (:magic %)))
-                       [:slug :path :name :comments :ratings :average :result]) (:node response))]
-     (assoc db :games games))))
+                       ;; TODO cast parent to event
+                       [:id :parent :slug :path :name :comments :ratings :average :result]) (:node response))]
+     (assoc db :games games :loading? false))))
 
 ;; TODO handle errors
 ;; (reg-event-fx :handle-user-error)
